@@ -5,7 +5,7 @@ Vishuddhi is a smart voice-powered virtual assistant built using JavaScript, HTM
 ---
 
 ## 🌐 Live Demo
-> Coming Soon — (Optional: Host it on GitHub Pages or Vercel)
+https://vishuddhijain.github.io/Vishuddhi-Virtual-Assistant/
 
 ---
 
