@@ -1,6 +1,40 @@
-let btn = document.querySelector("#btn");
-let content = document.querySelector("#content");
-let voice = document.querySelector("#voice");
+window.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("modal");
+  const closeModalBtn = document.getElementById("closeModal");
+  const greeting = document.getElementById("greeting");
+  const btn = document.getElementById("btn");
+  const voice = document.getElementById("voice");
+
+  const hour = new Date().getHours();
+  let wish = "Hello!";
+  if (hour < 12) wish = "Good Morning! Welcome to Vishuddhi Assistant.";
+  else if (hour < 18) wish = "Good Afternoon! Welcome to Vishuddhi Assistant.";
+  else wish = "Good Evening! Welcome to Vishuddhi Assistant.";
+  greeting.textContent = wish;
+  modal.classList.remove("hidden");
+
+  const speakGreeting = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.pitch = 1;
+    utterance.rate = 1;
+    utterance.volume = 1;
+    utterance.lang = 'hi-IN';
+    speechSynthesis.speak(utterance);
+  };
+
+  speakGreeting(wish);
+
+  closeModalBtn.addEventListener("click", () => {
+    modal.classList.add("hidden");
+    speechSynthesis.cancel();
+  });
+
+  btn.addEventListener("click", () => {
+    recognition.start();
+    btn.style.display = "none";
+    voice.style.display = "block";
+  });
+});
 
 function speak(text) {
   let text_speak = new SpeechSynthesisUtterance(text);
@@ -11,24 +45,10 @@ function speak(text) {
   window.speechSynthesis.speak(text_speak);
 }
 
-function wishMe() {
-  let day = new Date();
-  let hours = day.getHours();
-  if (hours >= 0 && hours < 12) {
-    speak("Good Morning Sir");
-  } else if (hours >= 12 && hours < 17) {
-    speak("Good Afternoon Sir");
-  } else {
-    speak("Good Evening Sir");
-  }
-}
 
-window.addEventListener("load", () => {
-  wishMe();
-});
 
 let speechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
+window.SpeechRecognition || window.webkitSpeechRecognition;
 let recognition = new speechRecognition();
 
 recognition.onresult = (event) => {
